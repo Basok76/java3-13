@@ -56,9 +56,9 @@ public class Main {
                 }
             }
         } catch (FileNotFoundException e) {
-            throw new IOException("Файл не найден: " + filename);
+            System.err.println("Файл не найден: " + e.getMessage());
         } catch (OutOfMemoryError e) {
-            throw new IOException("Недостаточно памяти для обработки файла.");
+            System.err.println("Out of memory error: " + e.getMessage());
         }
 
         if (!numbers.isEmpty()) {

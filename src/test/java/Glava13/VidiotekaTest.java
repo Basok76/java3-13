@@ -1,5 +1,6 @@
 package Glava13;
 
+import org.example.Glava13.DBConnection;
 import org.example.Glava13.DataSelector;
 import org.junit.jupiter.api.Test;
 
@@ -15,16 +16,18 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class VidiotekaTest {
+
+
     @Test
     public void testFindFilmsByYearRange() throws SQLException {
-
+        Connection conn = DBConnection.getConnection();
         int startYear = 1999;
         int endYear = 2010;
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        DataSelector.findFilmsByYearRange(startYear, endYear);
+        DataSelector.findFilmsByYearRange(conn,startYear, endYear);
 
         String output = outputStream.toString();
         assertTrue(output.contains("Inception"));
@@ -33,26 +36,27 @@ public class VidiotekaTest {
     }
     @Test
     public void testGetActorsByFilmTitle() throws SQLException {
+        Connection conn = DBConnection.getConnection();
         String filmTitle = "Inception";
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        DataSelector.getActorsByFilmTitle(filmTitle);
+        DataSelector.getActorsByFilmTitle(conn,filmTitle);
 
-        // Assert that the expected actor names are printed
         String output = outputStream.toString();
         assertTrue(output.contains("Leonardo DiCaprio"));
         assertTrue(output.contains("Born: 1974-11-11"));
     }
     @Test
     public void testGetFilmsByActorName() throws SQLException {
+        Connection conn = DBConnection.getConnection();
         String actorName = "Keanu Reeves";
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
 
-        DataSelector.getFilmsByActorName(actorName);
+        DataSelector.getFilmsByActorName(conn,actorName);
 
         String output = outputStream.toString();
         assertTrue(output.contains("The Matrix"));
